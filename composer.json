@@ -1,0 +1,29 @@
+{
+    "name": "falbar/laravel-system-log",
+    "description": "Write logs data in app.",
+    "keywords": [
+        "laravel",
+        "logging",
+        "log",
+        "files"
+    ],
+    "homepage": "http://falbar.ru/",
+    "license": "MIT",
+    "require": {
+        "php": "^7.4",
+        "ext-json": "*",
+        "laravel/framework": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Falbar\\SystemLog\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Falbar\\SystemLog\\Providers\\LogServiceProvider"
+            ]
+        }
+    }
+}
