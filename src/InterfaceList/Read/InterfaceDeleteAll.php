@@ -1,8 +1,8 @@
-<?php namespace Falbar\SystemLog\InterfaceList;
+<?php namespace Falbar\SystemLog\InterfaceList\Read;
 
 /**
  * Interface InterfaceDeleteAll
- * @package Falbar\SystemLog\InterfaceList
+ * @package Falbar\SystemLog\InterfaceList\Read
  */
 interface InterfaceDeleteAll
 {

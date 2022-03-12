@@ -1,9 +1,11 @@
 <?php namespace Falbar\SystemLog\Driver\File;
 
-use Falbar\SystemLog\InterfaceList\InterfacePut;
-use Falbar\SystemLog\SystemLog;
+use Falbar\SystemLog\InterfaceList\InterfaceWrite;
+use Falbar\HelperJson\JsonHelper;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Arr;
+
 use Carbon\Carbon;
 use Exception;
 
@@ -11,127 +13,47 @@ use Exception;
  * Class Write
  * @package Falbar\SystemLog\Driver\File
  */
-class Write extends AbstractFile implements InterfacePut
+class Write extends AbstractFile implements InterfaceWrite
 {
-    const DIR_MODE = 0777;
-
-    private string $sType;
-    private string $sMessage;
-
-    private array $arContext;
-
-    /**
-     * Write constructor
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->arContext = [
-            'info' => [],
-            'data' => [],
-        ];
-        $this->sMessage = '';
-
-        if (empty($this->sType)) {
-            $this->sType = SystemLog::ERROR;
-        }
-
-        if (empty($this->sNameSpace)) {
-            $this->sNameSpace = SystemLog::NAMESPACE_API;
-        }
-    }
+    private const DIR_MODE = 0777;
 
     /* @return bool */
     public function put(): bool
     {
-        $bResult = false;
-
-        $sBaseDirPath = storage_path(parent::BASE_DIR);
-        $sLogDirPath = $sBaseDirPath . '/' . $this->sNameSpace;
-
         try {
+            $sLogDirPath = $this->getStoragePath();
             if (empty(File::isDirectory($sLogDirPath))) {
                 File::makeDirectory($sLogDirPath, self::DIR_MODE, true, true);
             }
 
-            $sLogLine = '[' . Carbon::now()->toDateTimeString() . ']';
-            $sLogLine .= ' ' . $this->sType . ':';
-            $sLogLine .= ' ' . $this->sMessage;
-
-            if ($this->arContext['info'] || $this->arContext['data']) {
-                $sLogLine .= ' ' . json_encode($this->arContext, JSON_UNESCAPED_UNICODE);
-            }
-
-            $sLogLine .= PHP_EOL;
-
-            if (File::append($sLogDirPath . '/' . $this->sNameSpace . '-' . date('Y-m-d') . '.log', $sLogLine)) {
-                $bResult = true;
+            $sLogFilePath = $sLogDirPath . '/' . $this->sNameSpace . '-' . date('Y-m-d') . '.log';
+            if (!File::append($sLogFilePath, $this->getLogLine())) {
+                return false;
             }
         } catch (Exception $oException) {
-            return $bResult;
+            return false;
         }
 
-        return $bResult;
+        return true;
     }
 
-    /**
-     * @param string $sMessage
-     *
-     * @return Write
-     */
-    public function setMessage(string $sMessage): self
+    /* @return string */
+    private function getLogLine(): string
     {
-        $this->sMessage = $sMessage;
+        $sLogLine = '[' . Carbon::now()->toDateTimeString() . ']';
+        $sLogLine .= ' ' . $this->sType . ':';
 
-        return $this;
-    }
+        if (!empty($this->sMessage)) {
+            $sLogLine .= ' ' . $this->sMessage;
+        }
 
-    /**
-     * @param array $arInfo
-     *
-     * @return Write
-     */
-    public function setInfo(array $arInfo): self
-    {
-        $this->arContext['info'] = $arInfo;
+        $arContextData = Arr::get($this->arContext, 'data');
+        if (!empty($arContextData)) {
+            $sLogLine .= ' ' . JsonHelper::make()->data($arContextData)->encode();
+        }
 
-        return $this;
-    }
+        $sLogLine .= PHP_EOL;
 
-    /**
-     * @param array $arData
-     *
-     * @return Write
-     */
-    public function setData(array $arData): self
-    {
-        $this->arContext['data'] = $arData;
-
-        return $this;
-    }
-
-    /**
-     * @param string $sType
-     *
-     * @return Write
-     */
-    public function setType(string $sType): self
-    {
-        $this->sType = $sType;
-
-        return $this;
-    }
-
-    /**
-     * @param string $sNameSpace
-     *
-     * @return Write
-     */
-    public function setNameSpace(string $sNameSpace): self
-    {
-        $this->sNameSpace = $sNameSpace;
-
-        return $this;
+        return $sLogLine;
     }
 }

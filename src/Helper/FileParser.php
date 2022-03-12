@@ -1,8 +1,11 @@
 <?php namespace Falbar\SystemLog\Helper;
 
-use Symfony\Component\Finder\SplFileInfo;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+
+use Symfony\Component\Finder\SplFileInfo;
+use Falbar\SystemLog\SystemLog;
 
 /**
  * Class FileParser
@@ -10,20 +13,14 @@ use Illuminate\Support\Arr;
  */
 class FileParser
 {
-    const MAX_FILE_SIZE = 52428800;
+    private const MAX_FILE_SIZE = 52428800;
 
-    /* @var array */
-    private static $arLogLevelList = [
-        'emergency',
-        'alert',
-        'critical',
-        'error',
-        'warning',
-        'notice',
-        'info',
-        'debug',
-        'processed',
+    private const LOG_REGEX_LARAVEL_FILE = '/\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}([\+-]\d{4})?\].*/';
+    private const LOG_REGEX_LARAVEL_FILE_LEVEL = [
+        'BEFORE' => '/^\[(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}([\+-]\d{4})?)\](?:.*?(\w+)\.|.*?)',
+        'AFTER'  => ': (.*?)( in .*?:[0-9]+)?$/i',
     ];
+    private const LOG_REGEX_LARAVEL_FILE_STACK = '/^\n*/';
 
     /* @var SplFileInfo */
     private static $oFile;
@@ -50,7 +47,7 @@ class FileParser
     /**
      * @return array
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public static function getAll(): array
     {
@@ -69,22 +66,22 @@ class FileParser
             return $arResult;
         }
 
-        preg_match_all(RegexHelper::LOG_LARAVEL_FILE, $sFile, $arHeadings);
+        preg_match_all(self::LOG_REGEX_LARAVEL_FILE, $sFile, $arHeadings);
         if (empty($arHeadings) || empty(is_array($arHeadings))) {
             return $arResult;
         }
 
-        $arLogData = preg_split(RegexHelper::LOG_LARAVEL_FILE, $sFile);
+        $arLogData = preg_split(self::LOG_REGEX_LARAVEL_FILE, $sFile);
         if (Arr::get($arLogData, '0') < 1) {
             array_shift($arLogData);
         }
 
         foreach ($arHeadings as $sHead) {
             for ($iI = 0, $iJ = count($sHead); $iI < $iJ; $iI++) {
-                foreach (static::$arLogLevelList as $sLevel) {
+                foreach (SystemLog::TYPE_AVAILABLE as $sLevel) {
                     if (strpos(strtolower($sHead[$iI]), '.' . $sLevel) ||
                         strpos(strtolower($sHead[$iI]), $sLevel . ':')) {
-                        preg_match(RegexHelper::LOG_LARAVEL_FILE_LEVEL['BEFORE'] . $sLevel . RegexHelper::LOG_LARAVEL_FILE_LEVEL['AFTER'], $sHead[$iI], $arCurrent);
+                        preg_match(self::LOG_REGEX_LARAVEL_FILE_LEVEL['BEFORE'] . $sLevel . self::LOG_REGEX_LARAVEL_FILE_LEVEL['AFTER'], $sHead[$iI], $arCurrent);
                         if (empty(Arr::has($arCurrent, '4'))) {
                             continue;
                         }
@@ -95,7 +92,7 @@ class FileParser
                             'date'    => Arr::get($arCurrent, '1'),
                             'text'    => Arr::get($arCurrent, '4'),
                             'in_file' => Arr::get($arCurrent, '5'),
-                            'stack'   => preg_replace(RegexHelper::LOG_LARAVEL_FILE_STACK, '', $arLogData[$iI]),
+                            'stack'   => preg_replace(self::LOG_REGEX_LARAVEL_FILE_STACK, '', $arLogData[$iI]),
                         ];
                     }
                 }

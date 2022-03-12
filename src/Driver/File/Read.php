@@ -1,25 +1,16 @@
 <?php namespace Falbar\SystemLog\Driver\File;
 
-use Falbar\SystemLog\InterfaceList\InterfaceGetAllSize;
-use Falbar\SystemLog\InterfaceList\InterfaceDeleteAll;
-use Falbar\SystemLog\InterfaceList\InterfaceGetList;
-use Falbar\SystemLog\InterfaceList\InterfaceGetSize;
-use Falbar\SystemLog\InterfaceList\InterfaceDelete;
-use Falbar\SystemLog\SystemLog;
-
+use Falbar\SystemLog\InterfaceList\InterfaceRead;
 use Falbar\SystemLog\Helper\FileParser;
+
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
 
 /**
  * Class Read
  * @package Falbar\SystemLog\Driver\File
  */
-class Read extends AbstractFile implements
-    InterfaceGetSize,
-    InterfaceGetAllSize,
-    InterfaceGetList,
-    InterfaceDelete,
-    InterfaceDeleteAll
+class Read extends AbstractFile implements InterfaceRead
 {
     /* @return int */
     public function getSize(): int
@@ -46,7 +37,7 @@ class Read extends AbstractFile implements
     /**
      * @return array
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function getList(): array
     {
@@ -139,35 +130,5 @@ class Read extends AbstractFile implements
         }
 
         return true;
-    }
-
-    /**
-     * @param string $sNameSpace
-     *
-     * @return Read
-     */
-    public function setNameSpace(string $sNameSpace): self
-    {
-        $this->sNameSpace = $sNameSpace;
-
-        return $this;
-    }
-
-    /* @return string */
-    private function getStoragePath(): string
-    {
-        $sResult = '';
-
-        switch ($this->sNameSpace) {
-            case null;
-                $sResult = storage_path(parent::BASE_DIR);
-                break;
-            case SystemLog::NAMESPACE_WEB:
-            case SystemLog::NAMESPACE_API;
-                $sResult = storage_path(parent::BASE_DIR . '/' . $this->sNameSpace);
-                break;
-        }
-
-        return $sResult;
     }
 }
