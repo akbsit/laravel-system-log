@@ -14,8 +14,44 @@ abstract class AbstractDriver
     protected string $sMessage = '';
 
     protected array $arContext = [
+        'info' => [],
         'data' => [],
     ];
+
+    /* @return $this */
+    public function enableSimpleInfo(): self
+    {
+        $arTrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $arTrace = Arr::get($arTrace, '0');
+        if (empty($arTrace)) {
+            return $this;
+        }
+
+        Arr::set($this->arContext, 'info', [
+            'line' => Arr::get($arTrace, 'line'),
+            'file' => Arr::get($arTrace, 'file'),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param array $arInfo
+     *
+     * @return $this
+     */
+    public function setInfo(array $arInfo): self
+    {
+        $arContextInfo = (array)Arr::get($this->arContext, 'info');
+        $arContextInfo = array_merge($arContextInfo, $arInfo);
+        if (empty($arContextInfo)) {
+            return $this;
+        }
+
+        Arr::set($this->arContext, 'info', $arContextInfo);
+
+        return $this;
+    }
 
     /**
      * @param string $sNameSpace

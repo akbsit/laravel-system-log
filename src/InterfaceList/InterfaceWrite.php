@@ -9,6 +9,16 @@ use Falbar\SystemLog\Driver\AbstractDriver;
  */
 interface InterfaceWrite extends InterfacePut
 {
+    /* @return AbstractDriver */
+    public function enableSimpleInfo(): AbstractDriver;
+
+    /**
+     * @param array $arInfo
+     *
+     * @return AbstractDriver
+     */
+    public function setInfo(array $arInfo): AbstractDriver;
+
     /**
      * @param string $sNameSpace
      *

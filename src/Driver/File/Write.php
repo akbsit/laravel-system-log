@@ -47,8 +47,9 @@ class Write extends AbstractFile implements InterfaceWrite
             $sLogLine .= ' ' . $this->sMessage;
         }
 
+        $arContextInfo = Arr::get($this->arContext, 'info');
         $arContextData = Arr::get($this->arContext, 'data');
-        if (!empty($arContextData)) {
+        if (!empty($arContextInfo) || !empty($arContextData)) {
             $sLogLine .= ' ' . JsonHelper::make()->data($arContextData)->encode();
         }
 
