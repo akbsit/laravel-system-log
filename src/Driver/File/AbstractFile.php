@@ -17,9 +17,12 @@ abstract class AbstractFile extends AbstractDriver
         $sResult = '';
 
         switch ($this->sNameSpace) {
-            case SystemLog::NAMESPACE_DEFAULT;
+            case SystemLog::NAMESPACE_ROOT:
+                $sResult = storage_path(self::BASE_DIR);
+                break;
+            case SystemLog::NAMESPACE_DEFAULT:
             case SystemLog::NAMESPACE_WEB:
-            case SystemLog::NAMESPACE_API;
+            case SystemLog::NAMESPACE_API:
                 $sResult = storage_path(self::BASE_DIR . '/' . $this->sNameSpace);
                 break;
         }

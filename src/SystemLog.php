@@ -33,10 +33,12 @@ class SystemLog
         self::TYPE_PROCESSED,
     ];
 
+    const NAMESPACE_ROOT = 'root';
     const NAMESPACE_DEFAULT = 'default';
     const NAMESPACE_API = 'api';
     const NAMESPACE_WEB = 'web';
     const NAMESPACE_AVAILABLE = [
+        self::NAMESPACE_ROOT,
         self::NAMESPACE_DEFAULT,
         self::NAMESPACE_API,
         self::NAMESPACE_WEB,
