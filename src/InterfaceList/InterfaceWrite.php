@@ -1,7 +1,6 @@
 <?php namespace Falbar\SystemLog\InterfaceList;
 
 use Falbar\SystemLog\InterfaceList\Write\InterfacePut;
-use Falbar\SystemLog\Driver\AbstractDriver;
 
 /**
  * Interface InterfaceWrite
@@ -9,41 +8,41 @@ use Falbar\SystemLog\Driver\AbstractDriver;
  */
 interface InterfaceWrite extends InterfacePut
 {
-    /* @return AbstractDriver */
-    public function enableSimpleInfo(): AbstractDriver;
+    /* @return $this */
+    public function enableSimpleInfo();
 
     /**
      * @param array $arInfo
      *
-     * @return AbstractDriver
+     * @return $this
      */
-    public function setInfo(array $arInfo): AbstractDriver;
+    public function setInfo(array $arInfo);
 
     /**
      * @param string $sNameSpace
      *
-     * @return AbstractDriver
+     * @return $this
      */
-    public function setNameSpace(string $sNameSpace): AbstractDriver;
+    public function setNameSpace(string $sNameSpace);
 
     /**
      * @param string $sMessage
      *
-     * @return AbstractDriver
+     * @return $this
      */
-    public function setMessage(string $sMessage): AbstractDriver;
+    public function setMessage(string $sMessage);
 
     /**
      * @param array $arData
      *
-     * @return AbstractDriver
+     * @return $this
      */
-    public function setData(array $arData): AbstractDriver;
+    public function setData(array $arData);
 
     /**
      * @param string $sType
      *
-     * @return AbstractDriver
+     * @return $this
      */
-    public function setType(string $sType): AbstractDriver;
+    public function setType(string $sType);
 }

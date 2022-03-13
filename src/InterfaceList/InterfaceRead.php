@@ -6,8 +6,6 @@ use Falbar\SystemLog\InterfaceList\Read\InterfaceGetList;
 use Falbar\SystemLog\InterfaceList\Read\InterfaceGetSize;
 use Falbar\SystemLog\InterfaceList\Read\InterfaceDelete;
 
-use Falbar\SystemLog\Driver\AbstractDriver;
-
 /**
  * Interface InterfaceRead
  * @package Falbar\SystemLog\InterfaceList
@@ -22,7 +20,7 @@ interface InterfaceRead extends
     /**
      * @param string $sNameSpace
      *
-     * @return AbstractDriver
+     * @return $this
      */
-    public function setNameSpace(string $sNameSpace): AbstractDriver;
+    public function setNameSpace(string $sNameSpace);
 }
