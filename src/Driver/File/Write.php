@@ -16,6 +16,7 @@ use Exception;
 class Write extends AbstractFile implements InterfaceWrite
 {
     private const DIR_MODE = 0777;
+    private const FILE_MODE = 0777;
 
     /* @return bool */
     public function put(): bool
@@ -27,6 +28,8 @@ class Write extends AbstractFile implements InterfaceWrite
             }
 
             $sLogFilePath = $sLogDirPath . '/' . $this->sNameSpace . '-' . date('Y-m-d') . '.log';
+
+            $this->updateChmodFile($sLogFilePath);
             if (!File::append($sLogFilePath, $this->getLogLine())) {
                 return false;
             }
@@ -56,5 +59,23 @@ class Write extends AbstractFile implements InterfaceWrite
         $sLogLine .= PHP_EOL;
 
         return $sLogLine;
+    }
+
+    /**
+     * @param string $sFilePath
+     *
+     * @return void
+     */
+    private function updateChmodFile(string $sFilePath): void
+    {
+        if (!File::exists($sFilePath)) {
+            return;
+        }
+
+        if ((string)File::chmod($sFilePath) === '0' . decoct(self::FILE_MODE)) {
+            return;
+        }
+
+        File::chmod($sFilePath, self::FILE_MODE);
     }
 }
