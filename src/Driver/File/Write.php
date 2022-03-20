@@ -15,21 +15,22 @@ use Exception;
  */
 class Write extends AbstractFile implements InterfaceWrite
 {
-    private const DIR_MODE = 0777;
-    private const FILE_MODE = 0777;
+    private const CHMOD_MODE = 0777;
 
     /* @return bool */
     public function put(): bool
     {
         try {
             $sLogDirPath = $this->getStoragePath();
-            if (empty(File::isDirectory($sLogDirPath))) {
-                File::makeDirectory($sLogDirPath, self::DIR_MODE, true, true);
+            $this->chmod($sLogDirPath);
+
+            if (!File::isDirectory($sLogDirPath)) {
+                File::makeDirectory($sLogDirPath);
             }
 
             $sLogFilePath = $sLogDirPath . '/' . $this->sNameSpace . '-' . date('Y-m-d') . '.log';
+            $this->chmod($sLogFilePath);
 
-            $this->updateChmodFile($sLogFilePath);
             if (!File::append($sLogFilePath, $this->getLogLine())) {
                 return false;
             }
@@ -66,16 +67,16 @@ class Write extends AbstractFile implements InterfaceWrite
      *
      * @return void
      */
-    private function updateChmodFile(string $sFilePath): void
+    private function chmod(string $sFilePath): void
     {
         if (!File::exists($sFilePath)) {
             return;
         }
 
-        if ((string)File::chmod($sFilePath) === '0' . decoct(self::FILE_MODE)) {
+        if ((string)File::chmod($sFilePath) === '0' . decoct(self::CHMOD_MODE)) {
             return;
         }
 
-        File::chmod($sFilePath, self::FILE_MODE);
+        File::chmod($sFilePath, self::CHMOD_MODE);
     }
 }
