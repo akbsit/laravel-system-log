@@ -1,18 +1,18 @@
 # laravel-system-log, [Packagist](https://packagist.org/packages/falbar/laravel-system-log)
 
-Используется для работы c данными логирования, записи логов.
+It is used for working with logging data, recording logs.
 
-## Установка
+## Install
 
-Для установки пакета нужно:
+To install package, you need run command:
 
 ```bash
 composer require falbar/laravel-system-log
 ```
 
-## Примеры использования
+## Examples
 
-### Запись логов
+### Recording logs
 
 ```php
 use Falbar\SystemLog\SystemLog;
@@ -29,22 +29,22 @@ SystemLog::write()
     ->put();
 ```
 
-#### Список методов
+#### Methods
 
-* `setNameSpace($sNameSpace)` - указание пространства для чтения:
-    * `$sNameSpace` - название пространства (по умолчанию `default`).
-* `enableSimpleInfo()` - включить минимальный набор логирования места вызова;
-* `setInfo($arInfo)` - указание информации о месте логирования:
-    * `$arInfo` - массив данных.
-* `setData($arData)` - указание данных логирования:
-    * `$arData` - массив данных.
-* `setMessage($sMessage)` - указание сообщения логирования:
-    * `$sMessage` - сообщение.
-* `setType($sType)` - указание типа логирования:
-    * `$sType` - тип (по умолчанию `error`).
-* `put()` - создать запись.
+* `setNameSpace($sNameSpace)` - specifying the read space:
+    * `$sNameSpace` - name of the space (by default `default`).
+* `enableSimpleInfo()` - enable minimum set of call location logging;
+* `setInfo($arInfo)` - specifying information about the logging location:
+    * `$arInfo` - array data.
+* `setData($arData)` - specifying logging data:
+    * `$arData` - array data.
+* `setMessage($sMessage)` - specifying the logging message:
+    * `$sMessage` - message.
+* `setType($sType)` - specifying the logging type:
+    * `$sType` - type (by default `error`).
+* `put()` - create record.
 
-### Чтение логов
+### Reading logs
 
 ```php
 use Falbar\SystemLog\SystemLog;
@@ -53,12 +53,12 @@ $oSystemLog = SystemLog::read()
     ->setNameSpace(SystemLog::NAMESPACE_API);
 ```
 
-#### Список методов
+#### Methods
 
-* `setNameSpace($sNameSpace)` - указание пространства для чтения:
-    * `$sNameSpace` - название пространства.
-* `getSize()` - получить размер логов в пространстве;
-* `getAllSize()` - получить размер логов;
-* `delete()` - очистить логи в пространстве;
-* `deleteAll()` - очистить логи;
-* `getList()` - получить список логов в пространстве.
+* `setNameSpace($sNameSpace)` - specifying the read space:
+    * `$sNameSpace` - name of the space.
+* `getSize()` - get the size of logs in space;
+* `getAllSize()` - get the size of logs;
+* `delete()` - clear logs in space;
+* `deleteAll()` - clear logs;
+* `getList()` - get a list of logs in the space.
