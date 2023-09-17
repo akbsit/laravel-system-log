@@ -1,8 +1,8 @@
-<?php namespace Falbar\SystemLog\InterfaceList\Read;
+<?php namespace Akbsit\SystemLog\InterfaceList\Read;
 
 /**
  * Interface InterfaceGetSize
- * @package Falbar\SystemLog\InterfaceList\Read
+ * @package Akbsit\SystemLog\InterfaceList\Read
  */
 interface InterfaceGetSize
 {

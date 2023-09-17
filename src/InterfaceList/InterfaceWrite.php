@@ -1,10 +1,10 @@
-<?php namespace Falbar\SystemLog\InterfaceList;
+<?php namespace Akbsit\SystemLog\InterfaceList;
 
-use Falbar\SystemLog\InterfaceList\Write\InterfacePut;
+use Akbsit\SystemLog\InterfaceList\Write\InterfacePut;
 
 /**
  * Interface InterfaceWrite
- * @package Falbar\SystemLog\InterfaceList
+ * @package Akbsit\SystemLog\InterfaceList
  */
 interface InterfaceWrite extends InterfacePut
 {

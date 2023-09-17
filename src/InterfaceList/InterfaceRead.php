@@ -1,14 +1,14 @@
-<?php namespace Falbar\SystemLog\InterfaceList;
+<?php namespace Akbsit\SystemLog\InterfaceList;
 
-use Falbar\SystemLog\InterfaceList\Read\InterfaceGetAllSize;
-use Falbar\SystemLog\InterfaceList\Read\InterfaceDeleteAll;
-use Falbar\SystemLog\InterfaceList\Read\InterfaceGetList;
-use Falbar\SystemLog\InterfaceList\Read\InterfaceGetSize;
-use Falbar\SystemLog\InterfaceList\Read\InterfaceDelete;
+use Akbsit\SystemLog\InterfaceList\Read\InterfaceGetAllSize;
+use Akbsit\SystemLog\InterfaceList\Read\InterfaceDeleteAll;
+use Akbsit\SystemLog\InterfaceList\Read\InterfaceGetList;
+use Akbsit\SystemLog\InterfaceList\Read\InterfaceGetSize;
+use Akbsit\SystemLog\InterfaceList\Read\InterfaceDelete;
 
 /**
  * Interface InterfaceRead
- * @package Falbar\SystemLog\InterfaceList
+ * @package Akbsit\SystemLog\InterfaceList
  */
 interface InterfaceRead extends
     InterfaceGetAllSize,

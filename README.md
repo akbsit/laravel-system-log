@@ -1,4 +1,4 @@
-# laravel-system-log, [Packagist](https://packagist.org/packages/falbar/laravel-system-log)
+# laravel-system-log, [Packagist](https://packagist.org/packages/akbsit/laravel-system-log)
 
 It is used for working with logging data, recording logs.
 
@@ -7,7 +7,7 @@ It is used for working with logging data, recording logs.
 To install package, you need run command:
 
 ```bash
-composer require falbar/laravel-system-log
+composer require akbsit/laravel-system-log
 ```
 
 ## Examples
@@ -15,7 +15,7 @@ composer require falbar/laravel-system-log
 ### Recording logs
 
 ```php
-use Falbar\SystemLog\SystemLog;
+use Akbsit\SystemLog\SystemLog;
 
 $arData = [
     'some_data' => 1
@@ -47,7 +47,7 @@ SystemLog::write()
 ### Reading logs
 
 ```php
-use Falbar\SystemLog\SystemLog;
+use Akbsit\SystemLog\SystemLog;
 
 $oSystemLog = SystemLog::read()
     ->setNameSpace(SystemLog::NAMESPACE_API);

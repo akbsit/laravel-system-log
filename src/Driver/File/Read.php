@@ -1,14 +1,14 @@
-<?php namespace Falbar\SystemLog\Driver\File;
+<?php namespace Akbsit\SystemLog\Driver\File;
 
-use Falbar\SystemLog\InterfaceList\InterfaceRead;
-use Falbar\SystemLog\Helper\FileParser;
+use Akbsit\SystemLog\InterfaceList\InterfaceRead;
+use Akbsit\SystemLog\Helper\FileParser;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
 
 /**
  * Class Read
- * @package Falbar\SystemLog\Driver\File
+ * @package Akbsit\SystemLog\Driver\File
  */
 class Read extends AbstractFile implements InterfaceRead
 {

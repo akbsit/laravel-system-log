@@ -1,14 +1,14 @@
-<?php namespace Falbar\SystemLog;
+<?php namespace Akbsit\SystemLog;
 
-use Falbar\SystemLog\Driver\File\Write as FileWrite;
-use Falbar\SystemLog\Driver\File\Read as FileRead;
+use Akbsit\SystemLog\Driver\File\Write as FileWrite;
+use Akbsit\SystemLog\Driver\File\Read as FileRead;
 
-use Falbar\SystemLog\InterfaceList\InterfaceWrite;
-use Falbar\SystemLog\InterfaceList\InterfaceRead;
+use Akbsit\SystemLog\InterfaceList\InterfaceWrite;
+use Akbsit\SystemLog\InterfaceList\InterfaceRead;
 
 /**
  * Class SystemLog
- * @package Falbar\SystemLog
+ * @package Akbsit\SystemLog
  */
 class SystemLog
 {

@@ -1,7 +1,7 @@
-<?php namespace Falbar\SystemLog\Driver\File;
+<?php namespace Akbsit\SystemLog\Driver\File;
 
-use Falbar\SystemLog\InterfaceList\InterfaceWrite;
-use Falbar\HelperJson\JsonHelper;
+use Akbsit\SystemLog\InterfaceList\InterfaceWrite;
+use Akbsit\HelperJson\JsonHelper;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Arr;
@@ -11,7 +11,7 @@ use Exception;
 
 /**
  * Class Write
- * @package Falbar\SystemLog\Driver\File
+ * @package Akbsit\SystemLog\Driver\File
  */
 class Write extends AbstractFile implements InterfaceWrite
 {

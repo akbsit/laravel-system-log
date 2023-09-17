@@ -1,15 +1,15 @@
-<?php namespace Falbar\SystemLog\Helper;
+<?php namespace Akbsit\SystemLog\Helper;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 
 use Symfony\Component\Finder\SplFileInfo;
-use Falbar\SystemLog\SystemLog;
+use Akbsit\SystemLog\SystemLog;
 
 /**
  * Class FileParser
- * @package Falbar\SystemLog\Helper
+ * @package Akbsit\SystemLog\Helper
  */
 class FileParser
 {

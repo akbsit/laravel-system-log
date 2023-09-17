@@ -1,11 +1,11 @@
-<?php namespace Falbar\SystemLog\Driver\File;
+<?php namespace Akbsit\SystemLog\Driver\File;
 
-use Falbar\SystemLog\Driver\AbstractDriver;
-use Falbar\SystemLog\SystemLog;
+use Akbsit\SystemLog\Driver\AbstractDriver;
+use Akbsit\SystemLog\SystemLog;
 
 /**
  * Class AbstractFile
- * @package Falbar\SystemLog\Driver\File
+ * @package Akbsit\SystemLog\Driver\File
  */
 abstract class AbstractFile extends AbstractDriver
 {
